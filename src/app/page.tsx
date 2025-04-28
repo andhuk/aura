@@ -1,9 +1,28 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { Instagram } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [currentWord, setCurrentWord] = useState("свободи");
+  const words = ["свободи", "комфорту", "смаку"];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentWord((prev) => {
+        const currentIndex = words.indexOf(prev);
+        const nextIndex = (currentIndex + 1) % words.length;
+        return words[nextIndex];
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-white text-black flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <nav className="w-full py-4 px-8 flex justify-between items-center border-b border-gray-100">
         <Link href="/" className="flex items-center gap-2">
           <Image
@@ -12,45 +31,35 @@ export default function Home() {
             width={100}
             height={50}
             priority
+            style={{ filter: "invert(1)" }}
           />
         </Link>
 
-        <div className="flex items-center gap-6">
-          <Link href="/store" className="text-sm hover:underline">
-            Store
-          </Link>
-          <Link href="/login" className="text-sm hover:underline">
-            Login
-          </Link>
-          <Link
-            href="/register"
-            className="text-sm bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800"
-          >
-            Register
-          </Link>
-        </div>
+        <a
+          href="https://www.instagram.com/wearaura.xyz/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 text-white"
+        >
+          <Instagram className="h-6 w-6" />
+          <span className="text-sm font-medium">
+            Підпишись, щоб бути першим
+          </span>
+        </a>
       </nav>
 
       <main className="flex-grow flex flex-col items-center justify-center p-8">
-        <div className="mb-8">
-          <Image
-            src="/logotype.png"
-            alt="Aura logotype"
-            width={300}
-            height={150}
-            priority
-          />
-        </div>
-
-        <p className="text-xl font-medium mt-4 mb-8">Premium Clothing Brand</p>
-
-        <Link
-          href="/store"
-          className="px-6 py-3 bg-black text-white rounded-md hover:bg-gray-800 transition"
-        >
-          Explore Collection
-        </Link>
+        <h1 className="text-6xl md:text-8xl font-bold text-white mb-4">
+          <span style={{ fontFamily: "serif", fontStyle: "italic" }}>
+            Форма
+          </span>{" "}
+          {currentWord}
+        </h1>
       </main>
+
+      <div className="fixed bottom-6 w-full text-center">
+        <p className="text-xl font-medium text-white">скоро</p>
+      </div>
     </div>
   );
 }

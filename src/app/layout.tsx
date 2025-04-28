@@ -27,6 +27,14 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        style={{
+          backgroundImage: "url('/bg.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+        }}
+        suppressHydrationWarning
       >
         {children}
       </body>

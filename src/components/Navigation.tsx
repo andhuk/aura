@@ -1,68 +1,37 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, Instagram } from "lucide-react";
 
 export default function Navigation() {
-  const { authState, signOut } = useAuth();
-  const { user, isLoading } = authState;
-
   return (
     <header className="border-b">
-      <div className="container flex h-16 items-center justify-between py-4">
+      <div className="container flex h-12 items-center justify-between py-2">
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/logotype.png"
             alt="AURA"
-            width={100}
-            height={50}
+            width={70}
+            height={35}
             priority
+            style={{ filter: "invert(1)" }}
           />
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          <Link href="/store" className="text-sm font-medium hover:underline">
-            Store
-          </Link>
-
-          {!isLoading && (
-            <>
-              {user ? (
-                <>
-                  {user.role === "admin" && (
-                    <Link
-                      href="/admin"
-                      className="text-sm font-medium hover:underline"
-                    >
-                      Admin
-                    </Link>
-                  )}
-                  <Button
-                    onClick={() => signOut()}
-                    variant="ghost"
-                    className="text-sm font-medium"
-                  >
-                    Sign Out
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    href="/login"
-                    className="text-sm font-medium hover:underline"
-                  >
-                    Login
-                  </Link>
-                  <Button asChild>
-                    <Link href="/register">Register</Link>
-                  </Button>
-                </>
-              )}
-            </>
-          )}
+          <a
+            href="https://www.instagram.com/wearaura.xyz/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-white"
+          >
+            <Instagram className="h-6 w-6" />
+            <span className="text-sm font-medium">
+              Підпишись, щоб бути першим
+            </span>
+          </a>
         </nav>
 
         {/* Mobile Navigation */}
@@ -75,48 +44,17 @@ export default function Navigation() {
           </SheetTrigger>
           <SheetContent>
             <div className="flex flex-col gap-4 pt-10">
-              <Link
-                href="/store"
-                className="text-sm font-medium hover:underline"
+              <a
+                href="https://www.instagram.com/wearaura.xyz/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
               >
-                Store
-              </Link>
-
-              {!isLoading && (
-                <>
-                  {user ? (
-                    <>
-                      {user.role === "admin" && (
-                        <Link
-                          href="/admin"
-                          className="text-sm font-medium hover:underline"
-                        >
-                          Admin
-                        </Link>
-                      )}
-                      <Button
-                        onClick={() => signOut()}
-                        variant="ghost"
-                        className="justify-start text-sm font-medium p-0 h-auto"
-                      >
-                        Sign Out
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Link
-                        href="/login"
-                        className="text-sm font-medium hover:underline"
-                      >
-                        Login
-                      </Link>
-                      <Button asChild className="w-full mt-2">
-                        <Link href="/register">Register</Link>
-                      </Button>
-                    </>
-                  )}
-                </>
-              )}
+                <Instagram className="h-6 w-6" />
+                <span className="text-sm font-medium">
+                  Підпишись, щоб бути першим
+                </span>
+              </a>
             </div>
           </SheetContent>
         </Sheet>

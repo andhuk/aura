@@ -1,42 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Navigation from "@/components/Navigation";
-import ProductCard from "@/components/ProductCard";
 import { fetchProducts } from "@/services/productService";
 import { Product } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-
-const products = [
-  {
-    id: "1",
-    name: "Premium Cotton T-Shirt",
-    description: "Soft, breathable cotton t-shirt for everyday comfort.",
-    price: 29.99,
-    image_url:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
-    category: "T-Shirts",
-  },
-  {
-    id: "2",
-    name: "Slim Fit Jeans",
-    description: "Modern slim fit jeans with stretch for maximum comfort.",
-    price: 59.99,
-    image_url:
-      "https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=926&q=80",
-    category: "Pants",
-  },
-  {
-    id: "3",
-    name: "Oversized Hoodie",
-    description: "Cozy oversized hoodie perfect for cooler days.",
-    price: 49.99,
-    image_url:
-      "https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-    category: "Hoodies",
-  },
-];
 
 export default function Store() {
   const [products, setProducts] = useState<Product[]>([]);

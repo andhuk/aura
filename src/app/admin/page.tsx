@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Navigation from "@/components/Navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { fetchProducts, deleteProduct } from "@/services/productService";
@@ -112,13 +113,15 @@ export default function AdminDashboard() {
                   <tr key={product.id}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="h-10 w-10 flex-shrink-0">
-                          <img
-                            className="h-10 w-10 rounded-full object-cover"
+                        <div className="h-10 w-10 flex-shrink-0 relative">
+                          <Image
+                            className="rounded-full object-cover"
                             src={
                               product.image_url || "/placeholder-product.jpg"
                             }
                             alt={product.name}
+                            fill
+                            sizes="40px"
                           />
                         </div>
                         <div className="ml-4">

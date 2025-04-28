@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import supabase from "@/lib/supabase";
-import { AuthState, User } from "@/types";
+import { AuthState } from "@/types";
 
 const initialState: AuthState = {
   user: null,
@@ -114,11 +114,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
 
       if (error) throw error;
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to sign in";
       setAuthState((prev) => ({
         ...prev,
         isLoading: false,
-        error: error.message || "Failed to sign in",
+        error: errorMessage,
       }));
     }
   };
@@ -142,11 +144,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           role: "customer",
         });
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to sign up";
       setAuthState((prev) => ({
         ...prev,
         isLoading: false,
-        error: error.message || "Failed to sign up",
+        error: errorMessage,
       }));
     }
   };
@@ -157,11 +161,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to sign out";
       setAuthState((prev) => ({
         ...prev,
         isLoading: false,
-        error: error.message || "Failed to sign out",
+        error: errorMessage,
       }));
     }
   };

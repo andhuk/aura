@@ -6,6 +6,19 @@ import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import Navigation from "@/components/Navigation";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,72 +39,69 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-black flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Navigation />
 
-      <main className="flex-grow flex flex-col items-center justify-center p-8">
-        <div className="w-full max-w-md">
-          <h1 className="text-2xl font-bold mb-6 text-center">Sign In</h1>
+      <main className="flex-grow flex flex-col items-center justify-center p-4 md:p-8">
+        <Card className="w-full max-w-md">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold text-center">
+              Sign In
+            </CardTitle>
+            <CardDescription className="text-center">
+              Enter your email and password to sign in
+            </CardDescription>
+          </CardHeader>
 
-          {error && (
-            <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md">
-              {error}
-            </div>
-          )}
+          <CardContent>
+            {error && (
+              <Alert variant="destructive" className="mb-4">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-1">
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
-              />
-            </div>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  placeholder="name@example.com"
+                />
+              </div>
 
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium mb-1"
-              >
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
-              />
-            </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
 
-            <div>
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full py-2 bg-black text-white rounded-md hover:bg-gray-800 transition disabled:opacity-50"
-              >
+              <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "Signing in..." : "Sign In"}
-              </button>
-            </div>
-          </form>
+              </Button>
+            </form>
+          </CardContent>
 
-          <p className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{" "}
-            <Link
-              href="/register"
-              className="text-black font-medium hover:underline"
-            >
-              Sign up
-            </Link>
-          </p>
-        </div>
+          <CardFooter className="flex justify-center">
+            <p className="text-sm text-center">
+              Don&apos;t have an account?{" "}
+              <Link
+                href="/register"
+                className="font-medium underline underline-offset-4 hover:text-primary"
+              >
+                Sign up
+              </Link>
+            </p>
+          </CardFooter>
+        </Card>
       </main>
     </div>
   );

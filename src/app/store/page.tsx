@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 import { fetchProducts } from "@/services/productService";
 import { Product } from "@/types";
 import Image from "next/image";
-import Link from "next/link";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import Navigation from "@/components/Navigation";
 
 export default function Store() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -65,73 +68,51 @@ export default function Store() {
   const displayProducts = products.length > 0 ? products : demoProducts;
 
   return (
-    <div className="min-h-screen bg-white text-black flex flex-col">
-      <nav className="w-full py-4 px-8 flex justify-between items-center border-b border-gray-100">
-        <Link href="/" className="flex items-center gap-2">
-          <Image
-            src="/logotype.png"
-            alt="AURA"
-            width={100}
-            height={50}
-            priority
-          />
-        </Link>
+    <div className="min-h-screen flex flex-col">
+      <Navigation />
 
-        <div className="flex items-center gap-6">
-          <Link href="/store" className="text-sm hover:underline">
-            Store
-          </Link>
-          <Link href="/login" className="text-sm hover:underline">
-            Login
-          </Link>
-          <Link
-            href="/register"
-            className="text-sm bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800"
-          >
-            Register
-          </Link>
+      <main className="flex-grow container px-4 py-8 md:py-12">
+        <div className="space-y-2 mb-8">
+          <h1 className="text-3xl font-bold tracking-tight">Our Collection</h1>
+          <p className="text-muted-foreground">
+            Discover the latest styles in our curated collection
+          </p>
         </div>
-      </nav>
-
-      <main className="flex-grow p-8">
-        <h1 className="text-3xl font-bold mb-2">Our Collection</h1>
-        <p className="text-gray-600 mb-8">
-          Discover the latest styles in our curated collection
-        </p>
 
         {isLoading ? (
           <div className="flex justify-center items-center h-64">
-            <p>Loading products...</p>
+            <p className="text-muted-foreground">Loading products...</p>
           </div>
         ) : error ? (
-          <div className="bg-red-50 p-4 rounded-md text-red-800">{error}</div>
+          <Alert variant="destructive">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {displayProducts.map((product) => (
-              <div
-                key={product.id}
-                className="group block overflow-hidden rounded-lg transition hover:shadow-md"
-              >
-                <div className="relative h-[300px] w-full overflow-hidden bg-gray-100">
+              <Card key={product.id} className="overflow-hidden">
+                <div className="relative h-[300px] w-full overflow-hidden bg-muted">
                   <Image
                     src={product.image_url}
                     alt={product.name}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover object-center hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-
-                <div className="p-4">
+                <CardContent className="p-4">
                   <h3 className="text-lg font-medium">{product.name}</h3>
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="text-sm text-muted-foreground mt-1">
                     {product.category}
                   </p>
-                  <p className="mt-2 font-semibold">
+                </CardContent>
+                <CardFooter className="p-4 pt-0 flex items-center justify-between">
+                  <span className="font-semibold">
                     ${product.price.toFixed(2)}
-                  </p>
-                </div>
-              </div>
+                  </span>
+                  <Button variant="outline">View Details</Button>
+                </CardFooter>
+              </Card>
             ))}
           </div>
         )}
